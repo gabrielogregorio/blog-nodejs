@@ -1,0 +1,59 @@
+<%- include('../../partials/header.ejs'); %>
+<%- include('../../partials/navbar.ejs'); %>
+<div class="container">
+  <hr>
+  <h2>Artigos</h2>
+  <a class="btn btn-success" href="/admin/articles/new">Criar nova artigo</a>
+  <hr>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Titulo</th>
+        <th>Slug</th>
+        <th>Categoria</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% articles.forEach(article => { %> 
+        <tr>
+          <td><%= article.id %></td>
+          <td><%= article.title %></td>
+          <td><%= article.slug %></td>
+          <td><%= article.category.title %></td>
+          <td>
+            <a href="/admin/articles/edit/<%= article.id %>" class="btn btn-warning">Editar</a>
+
+            <form method="POST" action="/articles/delete" style="display: inline;" onsubmit="confirmDeleteCategory(event, this);">
+              <input type="hidden" name="id" value="<%= article.id %>">
+              <button class="btn btn-danger">Deletar</button>
+            </form>
+          </td>
+
+        </td>
+      <% }) %>
+    </tbody>
+
+  </table>
+</div>
+
+<script>
+  // Quer mesmo deletar a categoria
+  function confirmDeleteCategory(event, form) {
+    event.preventDefault();
+
+    var decision = confirm("Quer mesmo deletar este artigo?");
+
+    if (decision) {
+      form.submit();
+    } else {
+      console.log('Delete de artigo negado!')
+    }
+
+  }
+</script>
+
+<%- include('../../partials/footer.ejs'); %>
+

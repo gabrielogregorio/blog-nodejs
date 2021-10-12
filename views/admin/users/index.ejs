@@ -1,0 +1,55 @@
+<%- include('../../partials/header.ejs'); %>
+<%- include('../../partials/navbar.ejs'); %>
+
+<div class="container">
+  <hr>
+  <h2>Usuários</h2>
+  <a class="btn btn-success" href="/admin/users/create">Criar novo usuário</a>
+  <hr>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% users.forEach(user => { %>
+      <tr>
+        <th><%= user.id %></th>
+        <th><%= user.email %></th>
+        <th>         
+          <a href="/admin/xxxxxx/edit/<%= user.id %>" class="btn btn-warning">Editar</a>
+
+          <form method="POST" action="/xxxxx/delete" style="display: inline;" onsubmit="confirmDeleteUser(event, this);">
+            <input type="hidden" name="id" value="<%= user.id %>">
+            <button class="btn btn-danger">Deletar</button>
+          </form>
+        </th>
+      </tr>
+      <% }) %>
+    </tbody>
+
+  </table>
+</div>
+
+<script>
+  // Quer mesmo deletar a categoria
+  function confirmDeleteUser(event, form) {
+    event.preventDefault();
+
+    var decision = confirm("Quer mesmo deletar essa categoria?");
+
+    if (decision) {
+      form.submit();
+    } else {
+      console.log('Delete da categoria negado!')
+    }
+
+  }
+</script>
+
+<%- include('../../partials/footer.ejs'); %>
